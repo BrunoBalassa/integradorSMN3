@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="intregador:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>intregador</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="control.war">
+      <element id="artifact" artifact-name="intregador:war exploded" />
+    </root>
+  </artifact>
+</component>
