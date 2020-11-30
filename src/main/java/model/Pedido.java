@@ -1,23 +1,32 @@
 package model;
 
-public class Pedido {
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean
+@RequestScoped
+public class Pedido{
     private Integer id;
     private Double valor;
-    private String nomeFantasia;
     private String razaoSocial;
     private String cnpj;
     private String colaborador;
     private String produto;
+    private String status;
 
-    public Pedido(Integer id, Double valor, String nomeFantasia, String razaoSocial, String cnpj, String colaborador, String produto) {
+    public Pedido(Integer id, Double valor, String cnpj, String colaborador, String produto, String status) {
         this.id = id;
         this.valor = valor;
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
+        this.produto = produto;
+        this.status = status;
         this.cnpj = cnpj;
         this.colaborador = colaborador;
-        this.produto = produto;
     }
+
+    public Pedido() {
+
+    }
+
 
     public Integer getId() {
         return id;
@@ -35,20 +44,12 @@ public class Pedido {
         this.valor = valor;
     }
 
-    public String getNomeFantasia() {
-        return nomeFantasia;
-    }
-
-    public void setNomeFantasia(String nomeFantasia) {
-        this.nomeFantasia = nomeFantasia;
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
     }
 
     public String getRazaoSocial() {
         return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
     }
 
     public String getCnpj() {
@@ -73,5 +74,17 @@ public class Pedido {
 
     public void setProduto(String produto) {
         this.produto = produto;
+    }
+
+    public String getStatus() {
+        return status = "PENDENTE";
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public void getComercio(int id) {
     }
 }

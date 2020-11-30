@@ -1,9 +1,12 @@
 package DAO;
 import jdbc.Mysql;
 import model.Comercio;
+import model.Pedido;
 
+import javax.faces.context.FacesContext;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ComercioDAO {
     private static ResultSet rs;
@@ -13,23 +16,20 @@ public class ComercioDAO {
         String page = "";
         try {
             Connection connection = Mysql.getConnection();
-            PreparedStatement ps = connection.prepareStatement("insert into comercio (nomeFantasia, razaoSocial, cnpj, responsavel,telefone,ultimaCompra,valor) values (?,?, ?, ?,?,?,?)");
-            ps.setString(1, comercio.getNomeFantasia());
-            ps.setString(2, comercio.getRazaoSocial());
-            ps.setString(3, comercio.getCnpj());
-            ps.setString(4, comercio.getResponsavel());
-            ps.setString(5, comercio.getTelefone());
-            ps.setDate(5, (Date) comercio.getUltimaCompra());
-            ps.setDouble(6, comercio.getValor());
+            PreparedStatement ps = connection.prepareStatement("insert into comercio ( razaoSocial, cnpj, responsavel,telefone) values (?,?,?,?)");
+            ps.setString(1, comercio.getRazaoSocial());
+            ps.setString(2, comercio.getCnpj());
+            ps.setString(3, comercio.getResponsavel());
+            ps.setString(4, comercio.getTelefone());
             ps.executeUpdate();
             connection.close();
         }    catch (Exception e){
             e.printStackTrace();
         }
         if(resultado != 0){
-            page = "home.xhtml?faces-redirect=true";
+            page = "comercio.xhtml?faces-redirect=true";
         } else {
-            page = "createUsuario.xhtml?faces-redirect=true";
+            page = "creatComercio.xhtml?faces-redirect=true";
         }
 
         return page;
@@ -45,12 +45,10 @@ public class ComercioDAO {
             while (rs.next()){
                 Comercio comercio = new Comercio();
                 comercio.setId(rs.getInt("id"));
-                comercio.setNomeFantasia(rs.getString("nomeFantasia"));
+                comercio.setNomeFantasia(rs.getString("razaoSocial"));
                 comercio.setCnpj(rs.getString("cnpj"));
                 comercio.setResponsavel(rs.getString("responsavel"));
                 comercio.setTelefone(rs.getString("telefone"));
-                comercio.setValor(rs.getDouble("valor"));
-                comercio.setUltimaCompra(rs.getDate("ultimaCompra"));
                 listaEmpresa.add(comercio);
             }
             connection.close();
@@ -60,5 +58,29 @@ public class ComercioDAO {
             e.printStackTrace();
         }
         return listaEmpresa;
+    }
+    public String RealizarPedido(int id){
+        Pedido pedido = null;
+        Map<String, Object> map = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        try{
+            Connection connection = Mysql.getConnection();
+            PreparedStatement ps = connection.prepareStatement("select * from comercio c  where c.id = "+ id);
+            rs = ps.executeQuery();
+            if(rs != null){
+                rs.next();
+                pedido = new Pedido();
+                pedido.setRazaoSocial(rs.getString("razaoSocial"));
+                pedido.setCnpj(rs.getString("cnpj"));
+                pedido.setColaborador(rs.getString("responsavel"));
+            }
+            map.put("pedido", pedido);
+
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "creatPedido.xhtml?faces-redirect=true";
     }
 }

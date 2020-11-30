@@ -1,8 +1,11 @@
 package model;
 
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import java.util.Date;
-
+@ManagedBean
+@RequestScoped
 public class Comercio {
     private Integer id;
     private String nomeFantasia;
@@ -12,6 +15,7 @@ public class Comercio {
     private String telefone;
     private Date ultimaCompra;
     private Double valor;
+    private Pedido pedido;
 
     public Comercio(Integer id, String nomeFantasia, String razaoSocial, String cnpj, String responsavel, String telefone, Date ultimaCompra, Double valor) {
         this.id = id;
@@ -24,6 +28,9 @@ public class Comercio {
         this.valor = valor;
     }
     public Comercio (){}
+
+    public Comercio(String cnpj, String colaborador, String razaoSocial) {
+    }
 
     public Integer getId() {
         return id;
@@ -88,4 +95,5 @@ public class Comercio {
     public void setRazaoSocial(String razaoSocial) {
         this.razaoSocial = razaoSocial;
     }
+
 }

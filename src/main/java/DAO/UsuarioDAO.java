@@ -46,9 +46,9 @@ public class UsuarioDAO {
            e.printStackTrace();
         }
        if(resultado != 0){
-           page = "home.xhtml?faces-redirect=true";
+           page = "usuario/home.xhtml?faces-redirect=true";
        } else {
-           page = "createUsuario.xhtml?faces-redirect=true";
+           page = "usuario/createUsuario.xhtml?faces-redirect=true";
        }
 
        return page;
@@ -66,7 +66,7 @@ public class UsuarioDAO {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return "home.xhtml?faces-redirect=true";
+        return "usuario/home.xhtml?faces-redirect=true";
 
     }
 
